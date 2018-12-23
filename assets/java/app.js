@@ -1,8 +1,7 @@
 var audio = new Audio()
 var userchoice = 0;
-var correctAnswer
-var questionright = 0;
-var questionwrong = 0
+var questionRight = 0;
+var questionWrong = 0
 var questionincomplete = 0;
 var myQuestions = [
   {
@@ -113,22 +112,41 @@ var myQuestions = [
 $("#startButton").click(function () {
   $("#startGame").hide();
   $(".jumbotron").show();
-  $(startGame).show();
+  startGame()
+  timer = setInterval(function () {
+    time--;
+    $("#timer").html("<h1>" + time + "</h1>")
+  
+    if (time === 0) {
+      clearInterval(timer);
+      alert("done");
+  
+    }
+    // call submit function
+    // update html
+  }, 1000);
 })
 
 //function for the submit button
 $ (function () {
   $("#startGame").show();
   $(".jumbotron").hide();
-  $(startGame).show();
 })
 
 $("#submit").click(function () {
-  console.log("submit button")
+  console.log("submitbuttomworks")
+  for (var i = 0; i < myQuestions.length; i++) {
+    console.log($("input[value='" + myQuestions[i].correctAnswer + "'][name='" + i + "']").checked)
+    if ($("input[value='" + myQuestions[i].correctAnswer + "'][name='" + i + "']").checked) {
+     questionRight++ 
+     console.log("if statmejkadjfgbjkafg")
+    }
+    }
 });
 
 //function for starting game and displaying time and questions
 function startGame() {
+  console.log("hello")
   for (var i = 0; i < myQuestions.length; i++) {
     $("#quiz").append(myQuestions[i].question + "<br>");
     $("#quiz").append("<input type='radio' name='" + i + "' value='a'> " + myQuestions[i].answers.a + "<br>");
@@ -139,9 +157,9 @@ function startGame() {
   }
 };
 
-startGame();
 
-// function startgame( when page loads or refresh)
+// scoring
+
 
 
 // var all = resets all variables
@@ -153,33 +171,11 @@ startGame();
 // when user begins game start counting down by 1 second every second to 0
 // for submit quiz
 var timer;
-var time = 10;
-
-timer = setInterval(function () {
-  time--;
-  $("#timer").html("<h1>" + time + "</h1>")
-
-  if (time === 0) {
-    clearInterval(timer);
-    alert("done");
-
-  }
-  // call submit function
-  // update html
-}, 1000);
+var time = 30;
 
 
 
-function submit() {
-  if (userchoice !== correctAnswer) {
-    questionwrong++;
-    $("#").text(questionwrong)
-  } else if (userchoice === correctAnswer) {
-    questionright++;
-    $("#").text(questionright)
-  }
 
-}
 
 
 // function to complete game
