@@ -119,12 +119,13 @@ $("#startButton").click(function () {
   
     if (time === 0) {
       clearInterval(timer);
-      alert("done");
+      endgame();
   
     }
     // call submit function
     // update html
   }, 1000);
+  $("#startButton").addClass ("hidden");
 })
 
 //function for the submit button
@@ -133,16 +134,36 @@ $ (function () {
   $(".jumbotron").hide();
 })
 
-$("#submit").click(function () {
+function endgame() {
   console.log("submitbuttomworks")
   for (var i = 0; i < myQuestions.length; i++) {
     console.log($("input[value='" + myQuestions[i].correctAnswer + "'][name='" + i + "']").checked)
-    if ($("input[value='" + myQuestions[i].correctAnswer + "'][name='" + i + "']").checked) {
+    if ($("input[name=" + i + "]:checked").val()=== myQuestions[i].correctAnswer) {
      questionRight++ 
      console.log("if statmejkadjfgbjkafg")
     }
+
     }
-});
+    questionWrong = myQuestions.length - questionRight;
+
+    $("#correctanswers").html(questionRight)
+    $("#incorrectanswers").html(questionWrong)
+
+    questionRight = 0 
+    questionWrong = 0
+
+  $("#results").removeClass ("hidden");
+  $("#quiz").addClass ("hidden");
+  $("#timer").addClass ("hidden");
+  $("#submit").addClass ("hidden");
+}
+
+
+
+
+$("#submit").click(endgame);
+
+
 
 //function for starting game and displaying time and questions
 function startGame() {
@@ -160,7 +181,33 @@ function startGame() {
 
 // scoring
 
+$("#Retry").click(function () {
+  for (var i = 0; i < myQuestions.length; i++) {
+    var checked = $("input[name=" + i + "]:checked")
 
+
+  checked.prop("checked", false);
+  $("#quiz").removeClass ("hidden");
+  $("#results").addClass ("hidden");
+  $("#timer").removeClass ("hidden");
+  $("#submit").removeClass ("hidden");
+  time = 60;
+  
+  
+}
+timer = setInterval(function () {
+  time--;
+  $("#timer").html("<h1>" + time + "</h1>")
+
+  if (time === 0) {
+    clearInterval(timer);
+    endgame();
+
+  }
+  // call submit function
+  // update html
+}, 1000);
+})
 
 // var all = resets all variables
 // var time = 60000
@@ -171,7 +218,7 @@ function startGame() {
 // when user begins game start counting down by 1 second every second to 0
 // for submit quiz
 var timer;
-var time = 30;
+var time = 60;
 
 
 

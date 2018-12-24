@@ -14,3 +14,7 @@
     background: url("../images/chicagoflag.png") center fixed;
 
   }
+  .hidden{
+    display: none
+
+}
